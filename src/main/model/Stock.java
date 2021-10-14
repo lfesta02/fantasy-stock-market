@@ -7,9 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Stock {
     private String name;
     private double price;
-    private ThreadLocalRandom randomizer;
     private double lowerBound;
     private double upperBound;
+    private double previousPrice;
+    private boolean onMarket;
 
     // REQUIRES: stockName has a non-zero length, stockPrice > 0
     // EFFECTS: name of stock is set to stockName,
@@ -20,29 +21,32 @@ public class Stock {
         this.price = stockPrice;
         this.lowerBound = min;
         this.upperBound = max;
+        this.previousPrice = stockPrice;
+        this.onMarket = false;
     }
 
     // MODIFIES: this
     // EFFECTS: price of stock is updated by multiplying its current price with a
     //          randomly generated double
+    //          its former price is stored
     public void update() {
-        double modifier = randomizer.nextDouble(lowerBound, upperBound);
-        setPrice(price * modifier);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        previousPrice = price;
+        double modifier = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
+        price = price * modifier;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public double getPreviousPrice() {
+        return previousPrice;
+    }
+
+    public boolean isOnMarket() {
+        return onMarket;
+    }
+    public void setOnMarket(boolean onMarket) {
+        this.onMarket = onMarket;
     }
 }
