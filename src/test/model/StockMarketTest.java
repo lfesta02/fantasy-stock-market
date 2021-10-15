@@ -55,9 +55,9 @@ public class StockMarketTest {
         sm.addStock(ford);
 
         sm.nextDay();
-        assertFalse(apple.getPrice() == apple.getPreviousPrice());
-        assertFalse(tesla.getPrice() == tesla.getPreviousPrice());
-        assertFalse(ford.getPrice() == ford.getPreviousPrice());
+        assertNotEquals(apple.getPrice(), apple.getPreviousPrice(), 0.0);
+        assertNotEquals(tesla.getPrice(), tesla.getPreviousPrice(), 0.0);
+        assertNotEquals(ford.getPrice(), ford.getPreviousPrice(), 0.0);
 
     }
 }

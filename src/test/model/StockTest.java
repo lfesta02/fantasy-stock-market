@@ -18,19 +18,19 @@ class StockTest {
     public void testUpdateOnce() {
         s.update();
         assertEquals(10.00, s.getPreviousPrice());
-        assertFalse(s.getPrice() == s.getPreviousPrice());
+        assertNotEquals(s.getPrice(), s.getPreviousPrice(), 0.0);
     }
 
     @Test
     public void testUpdateMultiple() {
         s.update();
         assertEquals(10.00, s.getPreviousPrice());
-        assertFalse(s.getPrice() == s.getPreviousPrice());
+        assertNotEquals(s.getPrice(), s.getPreviousPrice(), 0.0);
         double x = s.getPrice();
 
         s.update();
         assertEquals(x, s.getPreviousPrice());
-        assertFalse(s.getPrice() == s.getPreviousPrice());
+        assertNotEquals(s.getPrice(), s.getPreviousPrice(), 0.0);
     }
 
 }

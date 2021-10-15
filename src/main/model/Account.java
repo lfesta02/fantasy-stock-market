@@ -31,8 +31,10 @@ public class Account {
     // MODIFIES: this
     // EFFECTS: sells the stock at its current price and removes it from the portfolio
     public void sellStock(Stock s) {
-        setBalance(balance + s.getPrice());
-        portfolio.remove(s);
+        if (pfContains(s)) {
+            setBalance(balance + s.getPrice());
+            portfolio.remove(s);
+        }
     }
 
     // EFFECTS: returns true if Stock s is in the portfolio and false otherwise
