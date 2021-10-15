@@ -17,7 +17,7 @@ public class AccountTest {
         myAccount = new Account();
         sm = new StockMarket();
         alphabet = new Stock("Alphabet Inc.", "ALPH", 300.45, 0.6, 1.9);
-        sony = new Stock("Sony", "SONY",  113.40, 0.5, 1.4);
+        sony = new Stock("Sony", "SONY", 113.40, 0.5, 1.4);
     }
 
     @Test
@@ -111,5 +111,17 @@ public class AccountTest {
         myAccount.sellStock(alphabet);
         assertEquals(Account.STARTING_BALANCE - alphabet.getPreviousPrice() + alphabet.getPrice(),
                 myAccount.getBalance());
+    }
+
+    @Test
+    public void testGetPortfolio() {
+        sm.addStock(alphabet);
+        sm.addStock(sony);
+        myAccount.buyStock(alphabet);
+        assertTrue(myAccount.getPortfolio().contains(alphabet));
+        assertEquals(alphabet, myAccount.getPortfolio().get(0));
+        myAccount.buyStock(sony);
+        assertTrue(myAccount.getPortfolio().contains(sony));
+        assertEquals(sony, myAccount.getPortfolio().get(1));
     }
 }

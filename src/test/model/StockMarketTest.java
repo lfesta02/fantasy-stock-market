@@ -60,4 +60,14 @@ public class StockMarketTest {
         assertNotEquals(ford.getPrice(), ford.getPreviousPrice(), 0.0);
 
     }
+
+    @Test
+    public void testGetStocks() {
+        sm.addStock(apple);
+        assertTrue(sm.getStocks().contains(apple));
+        assertEquals(apple, sm.getStocks().get(0));
+        sm.addStock(tesla);
+        assertTrue(sm.getStocks().contains(tesla));
+        assertEquals(tesla, sm.getStocks().get(1));
+    }
 }

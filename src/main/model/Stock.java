@@ -10,6 +10,7 @@ public class Stock {
     private double price;
     private double lowerBound;
     private double upperBound;
+
     private double previousPrice;
     private boolean onMarket;
 
@@ -23,18 +24,25 @@ public class Stock {
         this.price = stockPrice;
         this.lowerBound = min;
         this.upperBound = max;
+
         this.previousPrice = stockPrice;
         this.onMarket = false;
     }
 
     // MODIFIES: this
-    // EFFECTS: price of stock is updated by multiplying its current price with a
-    //          randomly generated double
-    //          its former price is stored
+    // EFFECTS: price of stock is updated, and its former price is stored
     public void update() {
         previousPrice = price;
         double modifier = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
         price = price * modifier;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     public double getPrice() {
@@ -48,15 +56,8 @@ public class Stock {
     public boolean isOnMarket() {
         return onMarket;
     }
+
     public void setOnMarket(boolean onMarket) {
         this.onMarket = onMarket;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSymbol() {
-        return symbol;
     }
 }

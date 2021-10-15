@@ -14,7 +14,7 @@ public class StockMarket {
 
     // REQUIRES: Stock s is not already an element of StockMarket
     // MODIFIES: this, Stock s
-    // EFFECTS: adds Stock s to the market
+    // EFFECTS: adds Stock s to the market and changes its field to indicate as such
     public void addStock(Stock s) {
         if (!contains(s)) {
             stocks.add(s);
@@ -24,7 +24,7 @@ public class StockMarket {
 
     // REQUIRES: Stock s is an element of StockMarket
     // MODIFIES: this, Stock s
-    // EFFECTS: removes Stock s from the market
+    // EFFECTS: removes Stock s from the market and changes its field to indicate as such
     public void removeStock(Stock s) {
         stocks.remove(s);
         s.setOnMarket(false);

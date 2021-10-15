@@ -18,7 +18,7 @@ public class FantasyStockMarketApp {
             "BPR", 44.56, 0.7, 1.5);
     private Stock neptune = new Stock("Neptune Spacecraft",
             "NPT", 388.32, 0.6, 2);
-    private Stock steroid = new Stock("Super Serum Startup",
+    private Stock steroid = new Stock("Super Steroid Startup",
             "SSS", 10.12, 0.01, 15);
     private Stock beyond = new Stock("Beyond Food Nutrition Pills",
             "BYND", 700.99, 0.6, 1.3);
@@ -52,6 +52,9 @@ public class FantasyStockMarketApp {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes and populates stock market
+    //          initializes account and scanner
     private void init() {
         market = new StockMarket();
         market.addStock(fraser);
@@ -65,6 +68,7 @@ public class FantasyStockMarketApp {
         input.useDelimiter("\n");
     }
 
+    // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from: ");
         System.out.println("\tm -> View Market");
@@ -75,6 +79,8 @@ public class FantasyStockMarketApp {
         System.out.println("\tq -> Quit");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user command
     private void processCommand(String command) {
         if (command.equals("m")) {
             viewMarket(market);
@@ -89,15 +95,20 @@ public class FantasyStockMarketApp {
         }
     }
 
+    // EFFECTS: Prints out current stock market
     private void viewMarket(StockMarket sm) {
         System.out.println("Today's Market");
         System.out.println("--------------");
         for (Stock s : sm.getStocks()) {
             System.out.print(s.getName() + " (" + s.getSymbol() + ")" + " : ");
             System.out.printf("$%.2f\n", s.getPrice());
+            System.out.print("\tChange from yesterday: ");
+            System.out.printf("$%.2f\n", s.getPrice() - s.getPreviousPrice());
         }
     }
 
+
+    // EFFECTS: Prints out current account
     private void viewAccount(Account a) {
         System.out.println("Your Account");
         System.out.println("------------");
@@ -109,6 +120,8 @@ public class FantasyStockMarketApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: conducts the purchase of a given stock
     private void buyStock() {
         System.out.println("Enter symbol of stock you would like to purchase:");
         String symbol = input.next();
@@ -121,6 +134,8 @@ public class FantasyStockMarketApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: conducts the sale of a given stock
     private void sellStock() {
         System.out.println("Enter symbol of stock you would like to sell:");
         String symbol = input.next();
@@ -137,6 +152,8 @@ public class FantasyStockMarketApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: conducts the simulation of a day
     private void simNextDay() {
         market.nextDay();
     }

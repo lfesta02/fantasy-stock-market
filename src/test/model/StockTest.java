@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Unit tests for Stock
-class StockTest {
+public class StockTest {
     Stock s;
 
     @BeforeEach
@@ -31,6 +31,24 @@ class StockTest {
         s.update();
         assertEquals(x, s.getPreviousPrice());
         assertNotEquals(s.getPrice(), s.getPreviousPrice(), 0.0);
+    }
+
+    @Test
+    public void testOnMarket() {
+        StockMarket sm = new StockMarket();
+        assertFalse(s.isOnMarket());
+        sm.addStock(s);
+        assertTrue(s.isOnMarket());
+    }
+
+    @Test
+    public void testGetName() {
+        assertEquals("Stock1", s.getName());
+    }
+
+    @Test
+    public void testGetSymbol() {
+        assertEquals("STCK", s.getSymbol());
     }
 
 }
