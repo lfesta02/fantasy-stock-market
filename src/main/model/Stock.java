@@ -2,10 +2,11 @@ package model;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-// Represents a stock having a name and price, as well as bounds that restrict the
+// Represents a stock having a name, symbol, and price, as well as bounds that restrict the
 // variance of its price modifier
 public class Stock {
     private String name;
+    private String symbol;
     private double price;
     private double lowerBound;
     private double upperBound;
@@ -16,8 +17,9 @@ public class Stock {
     // EFFECTS: name of stock is set to stockName,
     //          price of stock is set to stockPrice,
     //          lower and upper bounds of randomizer set to min and max, respectively
-    public Stock(String stockName, double stockPrice, double min, double max) {
+    public Stock(String stockName, String stockSymbol, double stockPrice, double min, double max) {
         this.name = stockName;
+        this.symbol = stockSymbol;
         this.price = stockPrice;
         this.lowerBound = min;
         this.upperBound = max;
@@ -48,5 +50,13 @@ public class Stock {
     }
     public void setOnMarket(boolean onMarket) {
         this.onMarket = onMarket;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }

@@ -14,8 +14,8 @@ public class StockMarketTest {
     @BeforeEach
     public void setup() {
         sm = new StockMarket();
-        apple = new Stock("Apple Inc.", 50.40, 0.01, 2);
-        tesla = new Stock("Tesla Motors", 435.34, 0.1, 2.4);
+        apple = new Stock("Apple Inc.", "AAPL", 50.40, 0.01, 2);
+        tesla = new Stock("Tesla Motors", "TSLA", 435.34, 0.1, 2.4);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class StockMarketTest {
     public void testNextDay() {
         sm.addStock(apple);
         sm.addStock(tesla);
-        Stock ford = new Stock("Ford Motor Company", 5.53, 0.7, 1.4);
+        Stock ford = new Stock("Ford Motor Company", "FORD", 5.53, 0.7, 1.4);
         sm.addStock(ford);
 
         sm.nextDay();

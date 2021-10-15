@@ -47,4 +47,8 @@ public class StockMarket {
     public int size() {
         return stocks.size();
     }
+
+    public List<Stock> getStocks() {
+        return stocks;
+    }
 }

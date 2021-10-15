@@ -16,8 +16,8 @@ public class AccountTest {
     public void setup() {
         myAccount = new Account();
         sm = new StockMarket();
-        alphabet = new Stock("Alphabet Inc.", 300.45, 0.6, 1.9);
-        sony = new Stock("Sony", 113.40, 0.5, 1.4);
+        alphabet = new Stock("Alphabet Inc.", "ALPH", 300.45, 0.6, 1.9);
+        sony = new Stock("Sony", "SONY",  113.40, 0.5, 1.4);
     }
 
     @Test
@@ -63,8 +63,8 @@ public class AccountTest {
 
     @Test
     public void testNotEnoughBalanceToBuy() {
-        Stock expensive = new Stock("Very Expensive Stock", Account.STARTING_BALANCE + 1000,
-                1, 1.2);
+        Stock expensive = new Stock("Very Expensive Stock", "EXP",
+                Account.STARTING_BALANCE + 1000, 1, 1.2);
         sm.addStock(expensive);
         myAccount.buyStock(expensive);
         assertFalse(myAccount.pfContains(expensive));
@@ -74,7 +74,8 @@ public class AccountTest {
 
     @Test
     public void testJustEnoughBalanceToBuy() {
-        Stock justEnough = new Stock("Give Us All Your Money", Account.STARTING_BALANCE, 1, 1.2);
+        Stock justEnough = new Stock("Give Us All Your Money", "GIVE",
+                Account.STARTING_BALANCE, 1, 1.2);
         sm.addStock(justEnough);
         myAccount.buyStock(justEnough);
         assertTrue(myAccount.pfContains(justEnough));

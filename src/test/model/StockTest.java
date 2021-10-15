@@ -11,7 +11,7 @@ class StockTest {
 
     @BeforeEach
     public void setup() {
-        s = new Stock("Stock1", 10.00, 0.5, 1.5);
+        s = new Stock("Stock1", "STCK", 10.00, 0.5, 1.5);
     }
 
     @Test
