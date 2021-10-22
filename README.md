@@ -22,3 +22,5 @@ it comes to investing, I find the stock market quite intriguing and thought it w
 - As a user, I want to be able to simulate the instant passing of a day, and have the market update each "day"
 - As a user, I want to be able to add a stock to my portfolio, where I can view all stocks I currently own
 - As a user, I want to be able to view information on a stock, namely its current price and change from last day
+- As a user, I want to be able to save the current state of my simulation to file when I quit
+- As a user, I want to be able to resume the simulation where I left off when I reopen it from file
