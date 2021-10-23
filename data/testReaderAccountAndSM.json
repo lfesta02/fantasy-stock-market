@@ -1,0 +1,25 @@
+{
+  "stocks": [
+    {
+      "name": "Tesla Motors",
+      "symbol": "TSLA",
+      "price": 900.43,
+      "lowerBound": 0.8,
+      "upperBound": 1.4,
+      "previousPrice": 874.34,
+      "onMarket": true
+    }
+  ],
+  "balance": 1340,
+  "portfolio": [
+    {
+      "name": "Apple, Inc.",
+      "symbol": "AAPL",
+      "price": 167.43,
+      "lowerBound": 0.5,
+      "upperBound": 1.4,
+      "previousPrice": 165.54,
+      "onMarket": true
+    }
+  ]
+}

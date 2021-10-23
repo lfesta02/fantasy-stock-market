@@ -7,6 +7,8 @@ import model.StockMarket;
 import java.util.Scanner;
 
 // Fantasy stock market application
+// This class references code from this repo:
+// https://github.students.cs.ubc.ca/CPSC210/TellerApp
 public class FantasyStockMarketApp {
     private StockMarket market;
     private Account myAccount;

@@ -49,8 +49,20 @@ public class Stock {
         return price;
     }
 
+    public double getLowerBound() {
+        return lowerBound;
+    }
+
+    public double getUpperBound() {
+        return upperBound;
+    }
+
     public double getPreviousPrice() {
         return previousPrice;
+    }
+
+    public void setPreviousPrice(double previousPrice) {
+        this.previousPrice = previousPrice;
     }
 
     public boolean isOnMarket() {

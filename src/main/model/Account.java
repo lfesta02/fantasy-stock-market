@@ -42,6 +42,12 @@ public class Account {
         return portfolio.contains(s);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds stock to portfolio (for when loading from file)
+    public void addStock(Stock s) {
+        portfolio.add(s);
+    }
+
     // EFFECTS: returns the current size of the portfolio
     public int pfSize() {
         return portfolio.size();
