@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents an account having a balance and a portfolio of stocks
-public class Account {
+public class Account implements Writable {
     public static final double STARTING_BALANCE = 1000;
 
     private double balance;
@@ -51,6 +55,25 @@ public class Account {
     // EFFECTS: returns the current size of the portfolio
     public int pfSize() {
         return portfolio.size();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("balance", balance);
+        json.put("portfolio", portfolioToJson());
+        return json;
+    }
+
+    // EFFECTS: returns portfolio of this Account as a JSON array
+    private JSONArray portfolioToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Stock s : portfolio) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
     }
 
     public double getBalance() {

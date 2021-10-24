@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 // Represents a stock having a name, symbol, and price, as well as bounds that restrict the
 // variance of its price modifier
-public class Stock {
+public class Stock implements Writable {
     private String name;
     private String symbol;
     private double price;
@@ -35,6 +38,19 @@ public class Stock {
         previousPrice = price;
         double modifier = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
         price = price * modifier;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("symbol", symbol);
+        json.put("price", price);
+        json.put("lowerBound", lowerBound);
+        json.put("upperBound", upperBound);
+        json.put("previousPrice", previousPrice);
+        json.put("onMarket", onMarket);
+        return json;
     }
 
     public String getName() {

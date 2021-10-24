@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// Represents a reader that reads stock market and account from JSON data stored in file
+// Represents a reader that reads StockMarket and Account from JSON data stored in file
 // This class references code from this repo:
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonReader {

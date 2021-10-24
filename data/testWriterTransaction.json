@@ -1,0 +1,21 @@
+{
+    "balance": 899.77,
+    "portfolio": [{
+        "symbol": "FB",
+        "upperBound": 1.2,
+        "price": 100.23,
+        "name": "Facebook",
+        "previousPrice": 100.23,
+        "lowerBound": 0.4,
+        "onMarket": true
+    }],
+    "stocks": [{
+        "symbol": "FB",
+        "upperBound": 1.2,
+        "price": 100.23,
+        "name": "Facebook",
+        "previousPrice": 100.23,
+        "lowerBound": 0.4,
+        "onMarket": true
+    }]
+}

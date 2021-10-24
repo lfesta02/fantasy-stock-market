@@ -1,0 +1,32 @@
+{
+    "balance": 1000,
+    "portfolio": [{
+        "symbol": "PEP",
+        "upperBound": 1.2,
+        "price": 40.53,
+        "name": "Pepsi",
+        "previousPrice": 40.53,
+        "lowerBound": 0.4,
+        "onMarket": false
+    }],
+    "stocks": [
+        {
+            "symbol": "MSFT",
+            "upperBound": 1.4,
+            "price": 389.82445089599855,
+            "name": "Microsoft",
+            "previousPrice": 290.54,
+            "lowerBound": 0.8,
+            "onMarket": true
+        },
+        {
+            "symbol": "KO",
+            "upperBound": 1.3,
+            "price": 44.79279460099846,
+            "name": "Coca-Cola",
+            "previousPrice": 50.43,
+            "lowerBound": 0.5,
+            "onMarket": true
+        }
+    ]
+}

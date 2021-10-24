@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a market containing a number of stocks
-public class StockMarket {
+public class StockMarket implements Writable {
     private List<Stock> stocks;
 
     // EFFECTS: market is empty
@@ -46,6 +50,24 @@ public class StockMarket {
     // EFFECTS: returns the total number of stocks on the market
     public int size() {
         return stocks.size();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("stocks", stocksToJson());
+        return json;
+    }
+
+    // EFFECTS: returns stocks in this StockMarket as a JSON array
+    private JSONArray stocksToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Stock s : stocks) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
     }
 
     public List<Stock> getStocks() {

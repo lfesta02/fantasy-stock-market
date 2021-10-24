@@ -75,11 +75,11 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(874.34, stocks.get(0).getPreviousPrice());
             assertEquals(true, stocks.get(0).isOnMarket());
             assertEquals(1340, a.getBalance());
+            List<Stock> portfolio = a.getPortfolio();
             assertEquals(1, a.pfSize());
-            checkStock("Apple, Inc.", "AAPL", 167.43, 0.5, 1.4,
-                    a.getPortfolio().get(0));
-            assertEquals(165.54, a.getPortfolio().get(0).getPreviousPrice());
-            assertEquals(true, a.getPortfolio().get(0).isOnMarket());
+            checkStock("Apple, Inc.", "AAPL", 167.43, 0.5, 1.4, portfolio.get(0));
+            assertEquals(165.54, portfolio.get(0).getPreviousPrice());
+            assertEquals(true, portfolio.get(0).isOnMarket());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
