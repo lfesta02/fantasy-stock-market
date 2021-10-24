@@ -13,7 +13,7 @@
         {
             "symbol": "MSFT",
             "upperBound": 1.4,
-            "price": 389.82445089599855,
+            "price": 315.0941512230756,
             "name": "Microsoft",
             "previousPrice": 290.54,
             "lowerBound": 0.8,
@@ -22,7 +22,7 @@
         {
             "symbol": "KO",
             "upperBound": 1.3,
-            "price": 44.79279460099846,
+            "price": 34.947098496501766,
             "name": "Coca-Cola",
             "previousPrice": 50.43,
             "lowerBound": 0.5,

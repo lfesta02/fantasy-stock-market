@@ -3,16 +3,23 @@ package ui;
 import model.Account;
 import model.Stock;
 import model.StockMarket;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Fantasy stock market application
 // This class references code from this repo:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 public class FantasyStockMarketApp {
+    private static final String JSON_STORE = "./data/fantasyStockMarket.json";
     private StockMarket market;
     private Account myAccount;
     private Scanner input;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     private Stock fraser = new Stock("Fraser Foods Incorporated",
             "FFI", 22.47, 0.4, 1.6);
@@ -44,6 +51,12 @@ public class FantasyStockMarketApp {
             command = command.toLowerCase();
 
             if (command.equals("q")) {
+                System.out.println("Would you like to save your progress?");
+                System.out.println("\ty -> Yes");
+                System.out.println("\tn -> No");
+                command = input.next();
+                command = command.toLowerCase();
+                processExitCommand(command);
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -51,7 +64,6 @@ public class FantasyStockMarketApp {
         }
 
         System.out.println("\nGoodbye, and thanks for investing!");
-
     }
 
     // MODIFIES: this
@@ -68,6 +80,8 @@ public class FantasyStockMarketApp {
         myAccount = new Account();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
     }
 
     // EFFECTS: displays menu of options to user
@@ -78,6 +92,7 @@ public class FantasyStockMarketApp {
         System.out.println("\tb -> Buy Stocks");
         System.out.println("\ts -> Sell Stocks");
         System.out.println("\tn -> Next Day");
+        System.out.println("\tl -> Load From File");
         System.out.println("\tq -> Quit");
     }
 
@@ -94,6 +109,16 @@ public class FantasyStockMarketApp {
             buyStock();
         } else if (command.equals("s")) {
             sellStock();
+        } else if (command.equals("l")) {
+            loadState();
+        }
+    }
+
+    private void processExitCommand(String command) {
+        if (command.equals("y")) {
+            saveState();
+        } else if (command.equals("n")) {
+            // do nothing
         }
     }
 
@@ -158,6 +183,29 @@ public class FantasyStockMarketApp {
     // EFFECTS: conducts the simulation of a day
     private void simNextDay() {
         market.nextDay();
+    }
+
+    // EFFECTS: saves state of simulation to file
+    private void saveState() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(market, myAccount);
+            jsonWriter.close();
+            System.out.println("Saved progress to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: loads state of simulation from file
+    private void loadState() {
+        try {
+            market = jsonReader.readSM();
+            myAccount = jsonReader.readAcc();
+            System.out.println("Loaded progress from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 }
