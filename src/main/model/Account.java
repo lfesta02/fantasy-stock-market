@@ -41,15 +41,15 @@ public class Account implements Writable {
         }
     }
 
-    // EFFECTS: returns true if Stock s is in the portfolio and false otherwise
-    public boolean pfContains(Stock s) {
-        return portfolio.contains(s);
-    }
-
     // MODIFIES: this
     // EFFECTS: adds stock to portfolio (for when loading from file)
     public void addStock(Stock s) {
         portfolio.add(s);
+    }
+
+    // EFFECTS: returns true if Stock s is in the portfolio and false otherwise
+    public boolean pfContains(Stock s) {
+        return portfolio.contains(s);
     }
 
     // EFFECTS: returns the current size of the portfolio
@@ -58,6 +58,9 @@ public class Account implements Writable {
     }
 
     @Override
+    // EFFECTS: returns this Account as a JSON object
+    // This method references code from this repo:
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("balance", balance);
@@ -66,6 +69,8 @@ public class Account implements Writable {
     }
 
     // EFFECTS: returns portfolio of this Account as a JSON array
+    // This method references code from this repo:
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     private JSONArray portfolioToJson() {
         JSONArray jsonArray = new JSONArray();
 

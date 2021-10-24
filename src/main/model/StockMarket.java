@@ -53,6 +53,7 @@ public class StockMarket implements Writable {
     }
 
     @Override
+    // EFFECTS: returns this StockMarket as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("stocks", stocksToJson());
@@ -60,6 +61,8 @@ public class StockMarket implements Writable {
     }
 
     // EFFECTS: returns stocks in this StockMarket as a JSON array
+    // This method references code from this repo:
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     private JSONArray stocksToJson() {
         JSONArray jsonArray = new JSONArray();
 

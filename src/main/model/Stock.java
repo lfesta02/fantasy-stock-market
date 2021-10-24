@@ -41,6 +41,9 @@ public class Stock implements Writable {
     }
 
     @Override
+    // EFFECTS: returns this Stock as a JSON object
+    // This method references code from this repo:
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

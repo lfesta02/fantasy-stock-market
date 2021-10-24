@@ -57,6 +57,7 @@ public class JsonReader {
         return sm;
     }
 
+    // MODIFIES: a
     // EFFECTS: parses Account from JSON object and returns it
     private Account parseAccount(JSONObject jsonObject) {
         Account a = new Account();
