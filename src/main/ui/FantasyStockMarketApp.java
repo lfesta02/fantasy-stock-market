@@ -5,21 +5,31 @@ import model.Stock;
 import model.StockMarket;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.elements.MarketUI;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 // Fantasy stock market application
 // This class references code from this repo:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
-public class FantasyStockMarketApp {
+public class FantasyStockMarketApp extends JFrame implements ListSelectionListener {
+
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 800;
+
     private static final String JSON_STORE = "./data/fantasyStockMarket.json";
     private StockMarket market;
     private Account myAccount;
     private Scanner input;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
+    private MarketUI marketUI;
 
     private Stock fraser = new Stock("Fraser Foods Incorporated",
             "FFI", 22.47, 0.4, 1.6);
@@ -34,42 +44,15 @@ public class FantasyStockMarketApp {
 
     // EFFECTS: runs the fantasy stock market application
     public FantasyStockMarketApp() {
-        runFantasyStockMarket();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: processes user input
-    private void runFantasyStockMarket() {
-        boolean keepGoing = true;
-        String command = null;
-
-        init();
-
-        while (keepGoing) {
-            displayMenu();
-            command = input.next();
-            command = command.toLowerCase();
-
-            if (command.equals("q")) {
-                System.out.println("Would you like to save your progress?");
-                System.out.println("\ty -> Yes");
-                System.out.println("\tn -> No");
-                command = input.next();
-                command = command.toLowerCase();
-                processExitCommand(command);
-                keepGoing = false;
-            } else {
-                processCommand(command);
-            }
-        }
-
-        System.out.println("\nGoodbye, and thanks for investing!");
+        super("Fantasy Stock Market");
+        initializeFields();
+        initializeGraphics();
     }
 
     // MODIFIES: this
     // EFFECTS: initializes and populates stock market
     //          initializes account and scanner
-    private void init() {
+    private void initializeFields() {
         market = new StockMarket();
         market.addStock(fraser);
         market.addStock(burger);
@@ -84,17 +67,26 @@ public class FantasyStockMarketApp {
         jsonWriter = new JsonWriter(JSON_STORE);
     }
 
-    // EFFECTS: displays menu of options to user
-    private void displayMenu() {
-        System.out.println("\nSelect from: ");
-        System.out.println("\tm -> View Market");
-        System.out.println("\ta -> View Account");
-        System.out.println("\tb -> Buy Stocks");
-        System.out.println("\ts -> Sell Stocks");
-        System.out.println("\tn -> Next Day");
-        System.out.println("\tl -> Load From File");
-        System.out.println("\tq -> Quit");
+    // MODIFIES: this
+    // EFFECTS: creates the JFrame window where this FantasyStockMarket will operate
+    private void initializeGraphics() {
+        setLayout(new BorderLayout());
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        createMarket();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
+
+    private void createMarket() {
+        JComponent newContentPane = new MarketUI(market);
+        newContentPane.setOpaque(true);
+        super.setContentPane(newContentPane);
+
+        super.pack();
+        super.setVisible(true);
+    }
+
 
     // MODIFIES: this
     // EFFECTS: processes user command
@@ -208,4 +200,8 @@ public class FantasyStockMarketApp {
         }
     }
 
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+
+    }
 }
