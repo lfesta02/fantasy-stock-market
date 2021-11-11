@@ -29,7 +29,6 @@ public class FantasyStockMarketApp extends JFrame implements ListSelectionListen
     private Scanner input;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
-    private MarketUI marketUI;
 
     private Stock fraser = new Stock("Fraser Foods Incorporated",
             "FFI", 22.47, 0.4, 1.6);
@@ -88,23 +87,6 @@ public class FantasyStockMarketApp extends JFrame implements ListSelectionListen
     }
 
 
-    // MODIFIES: this
-    // EFFECTS: processes user command
-    private void processCommand(String command) {
-        if (command.equals("m")) {
-            viewMarket(market);
-        } else if (command.equals("a")) {
-            viewAccount(myAccount);
-        } else if (command.equals("n")) {
-            simNextDay();
-        } else if (command.equals("b")) {
-            buyStock();
-        } else if (command.equals("s")) {
-            sellStock();
-        } else if (command.equals("l")) {
-            loadState();
-        }
-    }
 
     private void processExitCommand(String command) {
         if (command.equals("y")) {
