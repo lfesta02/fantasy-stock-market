@@ -4,19 +4,16 @@ import model.Stock;
 import model.StockMarket;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MarketUI extends JPanel {
     private boolean debug = false;
+    private JTable marketTable;
     private StockMarket sm;
     private List<Stock> stocks;
+    private DefaultTableModel tableModel;
 
     public MarketUI(StockMarket sm) {
         this.sm = sm;
@@ -25,22 +22,22 @@ public class MarketUI extends JPanel {
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
         String[] columnNames = {"Stock", "Symbol", "Current Price", "Yesterday's Price", "Change"};
 
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
+        tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        fillData(tableModel);
-        JTable table = new JTable(tableModel);
-        JButton buyButton = new JButton();
+        fillMarket();
+        marketTable = new JTable(tableModel);
 
         add(title);
-        add(makePane(table));
+        add(makePane(marketTable));
+
     }
 
-    private void fillData(DefaultTableModel tableModel) {
+    private void fillMarket() {
         for (Stock s : stocks) {
             String name = s.getName();
             String symbol = s.getSymbol();
@@ -59,4 +56,7 @@ public class MarketUI extends JPanel {
         return new JScrollPane(table);
     }
 
+    public JTable getMarketTable() {
+        return marketTable;
+    }
 }

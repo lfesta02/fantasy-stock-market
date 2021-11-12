@@ -6,19 +6,19 @@ import model.StockMarket;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.elements.MarketUI;
+import ui.elements.MenuUI;
+import ui.elements.PortfolioUI;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 // Fantasy stock market application
 // This class references code from this repo:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
-public class FantasyStockMarketApp extends JFrame implements ListSelectionListener {
+public class FantasyStockMarketApp extends JFrame {
 
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
@@ -29,6 +29,8 @@ public class FantasyStockMarketApp extends JFrame implements ListSelectionListen
     private Scanner input;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
+    private MarketUI marketPane;
+    private PortfolioUI portfolioPane;
 
     private Stock fraser = new Stock("Fraser Foods Incorporated",
             "FFI", 22.47, 0.4, 1.6);
@@ -72,42 +74,30 @@ public class FantasyStockMarketApp extends JFrame implements ListSelectionListen
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         createMarket();
+        createPortfolio();
+        createMenu();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
     private void createMarket() {
-        JComponent newContentPane = new MarketUI(market);
-        newContentPane.setOpaque(true);
-        super.setContentPane(newContentPane);
-
-        super.pack();
-        super.setVisible(true);
+        marketPane = new MarketUI(market);
+        marketPane.setOpaque(true);
+        super.add(marketPane, BorderLayout.PAGE_START);
     }
 
-
-
-    private void processExitCommand(String command) {
-        if (command.equals("y")) {
-            saveState();
-        } else if (command.equals("n")) {
-            // do nothing
-        }
+    private void createPortfolio() {
+        portfolioPane = new PortfolioUI(myAccount);
+        portfolioPane.setOpaque(true);
+        super.add(portfolioPane, BorderLayout.PAGE_END);
     }
 
-    // EFFECTS: Prints out current stock market
-    private void viewMarket(StockMarket sm) {
-        System.out.println("Today's Market");
-        System.out.println("--------------");
-        for (Stock s : sm.getStocks()) {
-            System.out.print(s.getName() + " (" + s.getSymbol() + ")" + " : ");
-            System.out.printf("$%.2f\n", s.getPrice());
-            System.out.print("\tChange from yesterday: ");
-            System.out.printf("$%.2f\n", s.getPrice() - s.getPreviousPrice());
-        }
+    private void createMenu() {
+        MenuUI buttonPane = new MenuUI(market, myAccount, marketPane, portfolioPane);
+        buttonPane.setOpaque(true);
+        super.add(buttonPane, BorderLayout.CENTER);
     }
-
 
     // EFFECTS: Prints out current account
     private void viewAccount(Account a) {
@@ -182,8 +172,4 @@ public class FantasyStockMarketApp extends JFrame implements ListSelectionListen
         }
     }
 
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-
-    }
 }
