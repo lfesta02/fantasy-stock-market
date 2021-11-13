@@ -6,15 +6,22 @@ import model.Stock;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.NumberFormat;
 
 public class PortfolioUI extends JPanel {
     private JTable portfolioTable;
     private DefaultTableModel tableModel;
+    private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
     public PortfolioUI(Account a) {
         String[] columnNames = {"Stock", "Symbol", "Current Price", "Yesterday's Price", "Change"};
 
-        tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         portfolioTable = new JTable(tableModel);
         add(makePane(portfolioTable));
 
@@ -30,9 +37,9 @@ public class PortfolioUI extends JPanel {
         for (Stock s : a.getPortfolio()) {
             String name = s.getName();
             String symbol = s.getSymbol();
-            double currentPrice = s.getPrice();
-            double previousPrice = s.getPreviousPrice();
-            double change = s.getPrice() - s.getPreviousPrice();
+            String currentPrice = formatter.format(s.getPrice());
+            String previousPrice = formatter.format(s.getPreviousPrice());
+            String change = formatter.format(s.getPrice() - s.getPreviousPrice());
 
             Object[] data = {name, symbol, currentPrice, previousPrice, change};
             tableModel.addRow(data);

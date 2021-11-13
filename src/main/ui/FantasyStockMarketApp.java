@@ -6,13 +6,16 @@ import model.StockMarket;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.elements.MarketUI;
-import ui.elements.MenuUI;
+import ui.elements.DashboardUI;
 import ui.elements.PortfolioUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 import javax.swing.*;
 
 // Fantasy stock market application
@@ -26,21 +29,24 @@ public class FantasyStockMarketApp extends JFrame {
     private static final String JSON_STORE = "./data/fantasyStockMarket.json";
     private StockMarket market;
     private Account myAccount;
-    private Scanner input;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
     private MarketUI marketPane;
     private PortfolioUI portfolioPane;
+    private DashboardUI dashboardPane;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem loadMenuItem;
 
-    private Stock fraser = new Stock("Fraser Foods Incorporated",
-            "FFI", 22.47, 0.4, 1.6);
-    private Stock burger = new Stock("Burger Prince Restaurants",
+    private Stock stock1 = new Stock("Fraser Foods Incorporated",
+            "FFI", 123.40, 0.4, 1.6);
+    private Stock stock2 = new Stock("Burger Prince Restaurants",
             "BPR", 44.56, 0.7, 1.5);
-    private Stock neptune = new Stock("Neptune Spacecraft",
-            "NPT", 388.32, 0.6, 2);
-    private Stock steroid = new Stock("Super Steroid Startup",
-            "SSS", 10.12, 0.01, 15);
-    private Stock beyond = new Stock("Beyond Food Nutrition Pills",
+    private Stock stock3 = new Stock("Neptune Spacecraft",
+            "NPT", 1786.32, 0.2, 2);
+    private Stock stock4 = new Stock("Super Steroid Startup",
+            "SSS", 10.12, 0.01, 1.9);
+    private Stock stock5 = new Stock("Beyond Food Nutrition Pills",
             "BYND", 700.99, 0.6, 1.3);
 
     // EFFECTS: runs the fantasy stock market application
@@ -48,22 +54,22 @@ public class FantasyStockMarketApp extends JFrame {
         super("Fantasy Stock Market");
         initializeFields();
         initializeGraphics();
+        initializeCloseBehaviour();
     }
 
     // MODIFIES: this
     // EFFECTS: initializes and populates stock market
-    //          initializes account and scanner
+    //          initializes account and JSON reader/writer
     private void initializeFields() {
         market = new StockMarket();
-        market.addStock(fraser);
-        market.addStock(burger);
-        market.addStock(neptune);
-        market.addStock(steroid);
-        market.addStock(beyond);
+        market.addStock(stock1);
+        market.addStock(stock2);
+        market.addStock(stock3);
+        market.addStock(stock4);
+        market.addStock(stock5);
 
         myAccount = new Account();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
+
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
     }
@@ -73,12 +79,40 @@ public class FantasyStockMarketApp extends JFrame {
     private void initializeGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        createMenu();
         createMarket();
         createPortfolio();
-        createMenu();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        createDashboard();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void initializeCloseBehaviour() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JFrame savePopup = new JFrame();
+                Object[] options = {"Yes", "No"};
+                int n = JOptionPane.showOptionDialog(savePopup, "Would you like to save?", "",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+                if (n == JOptionPane.YES_OPTION) {
+                    saveState();
+                }
+            }
+        });
+    }
+
+    private void createMenu() {
+        menuBar = new JMenuBar();
+        menu = new JMenu("File");
+        menuBar.add(menu);
+
+        loadMenuItem = new JMenuItem("Load State");
+        loadMenuItem.addActionListener(new LoadListener());
+        menu.add(loadMenuItem);
+
+        setJMenuBar(menuBar);
     }
 
     private void createMarket() {
@@ -93,60 +127,10 @@ public class FantasyStockMarketApp extends JFrame {
         super.add(portfolioPane, BorderLayout.PAGE_END);
     }
 
-    private void createMenu() {
-        MenuUI buttonPane = new MenuUI(market, myAccount, marketPane, portfolioPane);
-        buttonPane.setOpaque(true);
-        super.add(buttonPane, BorderLayout.CENTER);
-    }
-
-    // EFFECTS: Prints out current account
-    private void viewAccount(Account a) {
-        System.out.println("Your Account");
-        System.out.println("------------");
-        System.out.printf("Balance: $%.2f\n", a.getBalance());
-        System.out.println("Portfolio:");
-        for (Stock s : a.getPortfolio()) {
-            System.out.print(s.getName() + ": ");
-            System.out.printf("$%.2f\n", s.getPrice());
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: conducts the purchase of a given stock
-    private void buyStock() {
-        System.out.println("Enter symbol of stock you would like to purchase:");
-        String symbol = input.next();
-        symbol = symbol.toUpperCase();
-        for (Stock s : market.getStocks()) {
-            if (symbol.equals(s.getSymbol())) {
-                myAccount.buyStock(s);
-                System.out.println("Purchased " + s.getName());
-            }
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: conducts the sale of a given stock
-    private void sellStock() {
-        System.out.println("Enter symbol of stock you would like to sell:");
-        String symbol = input.next();
-        symbol = symbol.toUpperCase();
-        Stock toBeSold = null;
-        for (Stock s : myAccount.getPortfolio()) {
-            if (symbol.equals(s.getSymbol())) {
-                toBeSold = s;
-            }
-        }
-        if (myAccount.pfContains(toBeSold)) {
-            myAccount.sellStock(toBeSold);
-            System.out.println("Sold " + toBeSold.getName());
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: conducts the simulation of a day
-    private void simNextDay() {
-        market.nextDay();
+    private void createDashboard() {
+        dashboardPane = new DashboardUI(market, myAccount, marketPane, portfolioPane);
+        dashboardPane.setOpaque(true);
+        super.add(dashboardPane, BorderLayout.CENTER);
     }
 
     // EFFECTS: saves state of simulation to file
@@ -169,6 +153,13 @@ public class FantasyStockMarketApp extends JFrame {
             System.out.println("Loaded progress from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    class LoadListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadState();
         }
     }
 

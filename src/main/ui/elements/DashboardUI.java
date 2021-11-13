@@ -4,25 +4,29 @@ import model.Account;
 import model.StockMarket;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
-public class MenuUI extends JPanel {
+public class DashboardUI extends JPanel {
     private JTable currentMarketTable;
     private JTable currentPortfolioTable;
+    private JTextArea balance;
     private StockMarket sm;
     private Account acc;
-    private JTextArea balance;
+    private MarketUI marketUI;
     private PortfolioUI portfolioUI;
+    private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
-    public MenuUI(StockMarket sm, Account a, MarketUI m, PortfolioUI p) {
-        currentMarketTable = m.getMarketTable();
-        currentPortfolioTable = p.getPortfolioTable();
+
+    public DashboardUI(StockMarket sm, Account acc, MarketUI marketUI, PortfolioUI portfolioUI) {
+        currentMarketTable = marketUI.getMarketTable();
+        currentPortfolioTable = portfolioUI.getPortfolioTable();
         this.sm = sm;
-        acc = a;
-        portfolioUI = p;
+        this.acc = acc;
+        this.marketUI = marketUI;
+        this.portfolioUI = portfolioUI;
 
         JButton buyButton = new JButton("Buy Stock");
         buyButton.addActionListener(new BuyListener());
@@ -31,7 +35,7 @@ public class MenuUI extends JPanel {
         JButton nextButton = new JButton("Next Day");
         nextButton.addActionListener(new NextDayListener());
 
-        balance = new JTextArea("Balance: " + a.getBalance());
+        balance = new JTextArea("Balance: " + acc.getBalance());
         balance.setEditable(false);
         balance.setFont(new Font("Tahoma", Font.PLAIN, 15));
         balance.setOpaque(false);
@@ -47,7 +51,7 @@ public class MenuUI extends JPanel {
             int rowIndex = currentMarketTable.getSelectedRow();
             acc.buyStock(sm.getStocks().get(rowIndex));
             portfolioUI.updatePortfolioTable(acc);
-            balance.setText("Balance: " + acc.getBalance());
+            balance.setText("Balance: " + formatter.format(acc.getBalance()));
         }
     }
 
@@ -57,7 +61,7 @@ public class MenuUI extends JPanel {
             int rowIndex = currentPortfolioTable.getSelectedRow();
             acc.sellStock(acc.getPortfolio().get(rowIndex));
             portfolioUI.updatePortfolioTable(acc);
-            balance.setText("Balance: " + acc.getBalance());
+            balance.setText("Balance: " + formatter.format(acc.getBalance()));
         }
     }
 
@@ -65,6 +69,12 @@ public class MenuUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             sm.nextDay();
+            marketUI.updateMarketTable(sm);
+            portfolioUI.updatePortfolioTable(acc);
         }
+    }
+
+    public JTextArea getBalance() {
+        return balance;
     }
 }

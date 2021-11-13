@@ -6,18 +6,16 @@ import model.StockMarket;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class MarketUI extends JPanel {
     private boolean debug = false;
     private JTable marketTable;
-    private StockMarket sm;
-    private List<Stock> stocks;
     private DefaultTableModel tableModel;
+    private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
     public MarketUI(StockMarket sm) {
-        this.sm = sm;
-        stocks = sm.getStocks();
         JLabel title = new JLabel("Stock Market     ");
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
         String[] columnNames = {"Stock", "Symbol", "Current Price", "Yesterday's Price", "Change"};
@@ -29,7 +27,7 @@ public class MarketUI extends JPanel {
             }
         };
 
-        fillMarket();
+        updateMarketTable(sm);
         marketTable = new JTable(tableModel);
 
         add(title);
@@ -37,13 +35,14 @@ public class MarketUI extends JPanel {
 
     }
 
-    private void fillMarket() {
-        for (Stock s : stocks) {
+    public void updateMarketTable(StockMarket sm) {
+        tableModel.setRowCount(0);
+        for (Stock s : sm.getStocks()) {
             String name = s.getName();
             String symbol = s.getSymbol();
-            double currentPrice = s.getPrice();
-            double previousPrice = s.getPreviousPrice();
-            double change = s.getPrice() - s.getPreviousPrice();
+            String currentPrice = formatter.format(s.getPrice());
+            String previousPrice = formatter.format(s.getPreviousPrice());
+            String change = formatter.format(s.getPrice() - s.getPreviousPrice());
 
             Object[] data = {name, symbol, currentPrice, previousPrice, change};
             tableModel.addRow(data);
