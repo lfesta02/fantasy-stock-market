@@ -1,57 +1,57 @@
 {
-    "balance": 11766.148515215673,
+    "balance": 299.01,
     "portfolio": [{
-        "symbol": "FFI",
-        "upperBound": 1.1,
-        "price": 147.95812117074863,
-        "name": "Fraser Foods Incorporated",
-        "previousPrice": 149.47842688533552,
-        "lowerBound": 0.9,
+        "symbol": "BYND",
+        "upperBound": 1.4,
+        "price": 788.4509969436145,
+        "name": "Beyond Food Nutrition Pills",
+        "previousPrice": 700.99,
+        "lowerBound": 0.6,
         "onMarket": true
     }],
     "stocks": [
         {
             "symbol": "FFI",
             "upperBound": 1.1,
-            "price": 147.95812117074863,
+            "price": 125.78983026933736,
             "name": "Fraser Foods Incorporated",
-            "previousPrice": 149.47842688533552,
+            "previousPrice": 123.4,
             "lowerBound": 0.9,
             "onMarket": true
         },
         {
             "symbol": "BPR",
             "upperBound": 1.2,
-            "price": 33.12651628442543,
+            "price": 47.590005624290065,
             "name": "Burger Prince Restaurants",
-            "previousPrice": 30.4059966214831,
+            "previousPrice": 44.56,
             "lowerBound": 0.8,
             "onMarket": true
         },
         {
             "symbol": "NPT",
-            "upperBound": 2,
-            "price": 117581.93031289555,
+            "upperBound": 1.3,
+            "price": 1400.1782301888823,
             "name": "Neptune Spacecraft",
-            "previousPrice": 63084.76185324578,
-            "lowerBound": 0.5,
+            "previousPrice": 1099.23,
+            "lowerBound": 0.8,
             "onMarket": true
         },
         {
             "symbol": "SSS",
             "upperBound": 3,
-            "price": 11585.229663374674,
+            "price": 11.51510484921985,
             "name": "Super Steroid Startup",
-            "previousPrice": 5647.034785702226,
+            "previousPrice": 10.12,
             "lowerBound": 0.1,
             "onMarket": true
         },
         {
             "symbol": "BYND",
             "upperBound": 1.4,
-            "price": 1031.592608974611,
+            "price": 788.4509969436145,
             "name": "Beyond Food Nutrition Pills",
-            "previousPrice": 797.2320164791113,
+            "previousPrice": 700.99,
             "lowerBound": 0.6,
             "onMarket": true
         }

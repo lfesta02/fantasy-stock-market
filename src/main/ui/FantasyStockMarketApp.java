@@ -28,7 +28,7 @@ public class FantasyStockMarketApp extends JFrame {
 
     private static final String JSON_STORE = "./data/fantasyStockMarket.json";
     private static final Color MARKET_COLOR = new Color(126, 222, 138);
-    private static final Color PORTFOLIO_COLOR = new Color(158,213,247);
+    private static final Color PORTFOLIO_COLOR = new Color(158, 213, 247);
     private StockMarket market;
     private Account myAccount;
     private JsonReader jsonReader;
@@ -45,11 +45,11 @@ public class FantasyStockMarketApp extends JFrame {
     private Stock stock2 = new Stock("Burger Prince Restaurants",
             "BPR", 44.56, 0.8, 1.2);
     private Stock stock3 = new Stock("Neptune Spacecraft",
-            "NPT", 1099.23, 0.5, 2);
+            "NPT", 1099.23, 0.8, 1.2);
     private Stock stock4 = new Stock("Super Steroid Startup",
-            "SSS", 10.12, 0.1, 3);
+            "SSS", 10.12, 0.9, 1.1);
     private Stock stock5 = new Stock("Beyond Food Nutrition Pills",
-            "BYND", 700.99, 0.6, 1.4);
+            "BYND", 700.99, 0.9, 1.1);
 
     // EFFECTS: runs the fantasy stock market application
     public FantasyStockMarketApp() {
@@ -90,6 +90,8 @@ public class FantasyStockMarketApp extends JFrame {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets it so that closing shows save option popup then exits the application
     private void initializeBehaviourOnClose() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -106,12 +108,13 @@ public class FantasyStockMarketApp extends JFrame {
         });
     }
 
-
+    // EFFECTS: displays splash screen on start
     // This method references code from this page:
     // https://stackoverflow.com/questions/16134549/how-to-make-a-splash-screen-for-gui
     private void showStartupScreen() {
         JWindow window = new JWindow();
         JLabel content = new JLabel(new ImageIcon("data/splash.jpg"));
+        // Image source: https://pngtree.com/freebackground/stock-market-appreciation-cartoon-banner_923910.html
         content.setText("Fantasy Stock Market");
         content.setFont(new Font("Courier", Font.BOLD, 34));
         content.setHorizontalTextPosition(JLabel.CENTER);
@@ -129,6 +132,8 @@ public class FantasyStockMarketApp extends JFrame {
         window.setVisible(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a drop-down menu from which a saved file can be loaded
     private void createMenu() {
         menuBar = new JMenuBar();
         menu = new JMenu("File");
@@ -141,6 +146,9 @@ public class FantasyStockMarketApp extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the JPanel displaying the market, sets its background color,
+    //          and adds it to the window
     private void createMarket() {
         marketPane = new MarketUI(market);
         marketPane.setOpaque(true);
@@ -148,6 +156,9 @@ public class FantasyStockMarketApp extends JFrame {
         super.add(marketPane, BorderLayout.PAGE_START);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the JPanel displaying myAccount's portfolio, sets its background color,
+    //          and adds it to the window
     private void createPortfolio() {
         portfolioPane = new PortfolioUI(myAccount);
         portfolioPane.setOpaque(true);
@@ -155,6 +166,9 @@ public class FantasyStockMarketApp extends JFrame {
         super.add(portfolioPane, BorderLayout.PAGE_END);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the JPanel displaying a dashboard, sets its background color,
+    //          and adds it to the window
     private void createDashboard() {
         dashboardPane = new DashboardUI(market, myAccount, marketPane, portfolioPane);
         dashboardPane.setOpaque(true);
@@ -185,7 +199,10 @@ public class FantasyStockMarketApp extends JFrame {
         }
     }
 
-    class LoadListener implements ActionListener {
+    // Represents an action listener for the "Load State" menu item
+    private class LoadListener implements ActionListener {
+        // MODIFIES: this
+        // EFFECTS: re-initializes graphics with loaded state
         @Override
         public void actionPerformed(ActionEvent e) {
             loadState();

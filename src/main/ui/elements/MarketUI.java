@@ -7,14 +7,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.NumberFormat;
-import java.util.List;
 
+// Represents a panel that displays a table of stock market data
 public class MarketUI extends JPanel {
-    private boolean debug = false;
     private JTable marketTable;
     private DefaultTableModel tableModel;
     private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
+    // EFFECTS: - title is initialized, instantiated and added to panel
+    //          - table is instantiated with model containing data of given market and added to panel
     public MarketUI(StockMarket sm) {
         JLabel title = new JLabel("Stock Market     ");
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -35,6 +36,9 @@ public class MarketUI extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: extracts data from each stock in the given market as strings, assembles strings in an object,
+    //          then adds that object as a row in the table model
     public void updateMarketTable(StockMarket sm) {
         tableModel.setRowCount(0);
         for (Stock s : sm.getStocks()) {
@@ -49,6 +53,8 @@ public class MarketUI extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a JScrollPane object with the given JTable
     private JScrollPane makePane(JTable table) {
         table.setPreferredScrollableViewportSize(new Dimension(500, 80));
         table.setFillsViewportHeight(true);

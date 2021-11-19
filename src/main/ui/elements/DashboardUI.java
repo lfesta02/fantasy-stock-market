@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+// Represents a panel that displays a dashboard containing account balance and interactive buttons
 public class DashboardUI extends JPanel {
     private JTable currentMarketTable;
     private JTable currentPortfolioTable;
@@ -19,6 +20,8 @@ public class DashboardUI extends JPanel {
     private PortfolioUI portfolioUI;
     private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
+    // EFFECTS: - dashboard fields are instantiated to correspond with given market/portfolio
+    //          - buttons and balance display are initialized, instantiated, and added to panel
     public DashboardUI(StockMarket sm, Account acc, MarketUI marketUI, PortfolioUI portfolioUI) {
         this.sm = sm;
         this.acc = acc;
@@ -34,12 +37,7 @@ public class DashboardUI extends JPanel {
         JButton nextButton = new JButton("Next Day");
         nextButton.addActionListener(new NextDayListener());
         balance = new JTextField("Balance: " + formatter.format(acc.getBalance()));
-        balance.setEditable(false);
-        balance.setHighlighter(null);
-        balance.setFont(new Font("Courier", Font.ITALIC, 36));
-        balance.setOpaque(false);
-        balance.setHorizontalAlignment(JTextField.CENTER);
-        balance.setBorder(BorderFactory.createEmptyBorder());
+        formatBalance(balance);
 
         alignAndAdd(buyButton);
         alignAndAdd(sellButton);
@@ -49,7 +47,10 @@ public class DashboardUI extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
-    class BuyListener implements ActionListener {
+    // Represents an action listener for the buy button
+    private class BuyListener implements ActionListener {
+        // MODIFIES: this, acc, portfolioUI
+        // EFFECTS: attempts to buy selected stock, updates portfolio table and balance display to reflect outcome
         @Override
         public void actionPerformed(ActionEvent e) {
             int rowIndex = currentMarketTable.getSelectedRow();
@@ -59,7 +60,11 @@ public class DashboardUI extends JPanel {
         }
     }
 
-    class SellListener implements ActionListener {
+    // Represents an action listener for the sell button
+    private class SellListener implements ActionListener {
+        // REQUIRES: stock must be selected in portfolio table
+        // MODIFIES: this, acc, portfolioUI
+        // EFFECTS: sells selected stock, updates portfolio table and balance display to reflect outcome
         @Override
         public void actionPerformed(ActionEvent e) {
             int rowIndex = currentPortfolioTable.getSelectedRow();
@@ -69,7 +74,10 @@ public class DashboardUI extends JPanel {
         }
     }
 
-    class NextDayListener implements ActionListener {
+    // Represents an action listener for the next day button
+    private class NextDayListener implements ActionListener {
+        // MODIFIES: this, sm, acc, marketUI, portfolioUI
+        // EFFECTS: progresses a day, updates market and portfolio tables with the changes
         @Override
         public void actionPerformed(ActionEvent e) {
             sm.nextDay();
@@ -78,11 +86,20 @@ public class DashboardUI extends JPanel {
         }
     }
 
-    public JTextField getBalance() {
-        return balance;
+    // MODIFIES: this
+    // EFFECTS: formats the appearance of the balance display
+    private void formatBalance(JTextField balance) {
+        balance.setEditable(false);
+        balance.setHighlighter(null);
+        balance.setFont(new Font("Courier", Font.ITALIC, 36));
+        balance.setOpaque(false);
+        balance.setHorizontalAlignment(JTextField.CENTER);
+        balance.setBorder(BorderFactory.createEmptyBorder());
     }
 
-    public void alignAndAdd(JComponent j) {
+    // MODIFIES: this
+    // EFFECTS: adds given component to panel, and aligns it to the center
+    private void alignAndAdd(JComponent j) {
         add(j);
         j.setAlignmentX(CENTER_ALIGNMENT);
     }
