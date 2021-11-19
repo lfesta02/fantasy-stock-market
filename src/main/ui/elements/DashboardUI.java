@@ -12,7 +12,7 @@ import java.text.NumberFormat;
 public class DashboardUI extends JPanel {
     private JTable currentMarketTable;
     private JTable currentPortfolioTable;
-    private JTextArea balance;
+    private JTextField balance;
     private StockMarket sm;
     private Account acc;
     private MarketUI marketUI;
@@ -33,15 +33,20 @@ public class DashboardUI extends JPanel {
         sellButton.addActionListener(new SellListener());
         JButton nextButton = new JButton("Next Day");
         nextButton.addActionListener(new NextDayListener());
-
-        balance = new JTextArea("Balance: " + formatter.format(acc.getBalance()));
+        balance = new JTextField("Balance: " + formatter.format(acc.getBalance()));
         balance.setEditable(false);
-        balance.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        balance.setHighlighter(null);
+        balance.setFont(new Font("Courier", Font.ITALIC, 36));
         balance.setOpaque(false);
-        add(buyButton);
-        add(sellButton);
-        add(nextButton);
+        balance.setHorizontalAlignment(JTextField.CENTER);
+        balance.setBorder(BorderFactory.createEmptyBorder());
+
+        alignAndAdd(buyButton);
+        alignAndAdd(sellButton);
+        alignAndAdd(nextButton);
         add(balance);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     class BuyListener implements ActionListener {
@@ -73,7 +78,12 @@ public class DashboardUI extends JPanel {
         }
     }
 
-    public JTextArea getBalance() {
+    public JTextField getBalance() {
         return balance;
+    }
+
+    public void alignAndAdd(JComponent j) {
+        add(j);
+        j.setAlignmentX(CENTER_ALIGNMENT);
     }
 }

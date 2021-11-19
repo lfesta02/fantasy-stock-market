@@ -23,10 +23,12 @@ import javax.swing.*;
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 public class FantasyStockMarketApp extends JFrame {
 
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 800;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     private static final String JSON_STORE = "./data/fantasyStockMarket.json";
+    private static final Color MARKET_COLOR = new Color(126, 222, 138);
+    private static final Color PORTFOLIO_COLOR = new Color(158,213,247);
     private StockMarket market;
     private Account myAccount;
     private JsonReader jsonReader;
@@ -39,15 +41,15 @@ public class FantasyStockMarketApp extends JFrame {
     private JMenuItem loadMenuItem;
 
     private Stock stock1 = new Stock("Fraser Foods Incorporated",
-            "FFI", 123.40, 0.4, 1.6);
+            "FFI", 123.40, 0.9, 1.1);
     private Stock stock2 = new Stock("Burger Prince Restaurants",
-            "BPR", 44.56, 0.7, 1.5);
+            "BPR", 44.56, 0.8, 1.2);
     private Stock stock3 = new Stock("Neptune Spacecraft",
-            "NPT", 1786.32, 0.2, 2);
+            "NPT", 1099.23, 0.5, 2);
     private Stock stock4 = new Stock("Super Steroid Startup",
-            "SSS", 10.12, 0.01, 1.9);
+            "SSS", 10.12, 0.1, 3);
     private Stock stock5 = new Stock("Beyond Food Nutrition Pills",
-            "BYND", 700.99, 0.6, 1.3);
+            "BYND", 700.99, 0.6, 1.4);
 
     // EFFECTS: runs the fantasy stock market application
     public FantasyStockMarketApp() {
@@ -79,6 +81,7 @@ public class FantasyStockMarketApp extends JFrame {
     private void initializeGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        showStartupScreen();
         createMenu();
         createMarket();
         createPortfolio();
@@ -103,6 +106,29 @@ public class FantasyStockMarketApp extends JFrame {
         });
     }
 
+
+    // This method references code from this page:
+    // https://stackoverflow.com/questions/16134549/how-to-make-a-splash-screen-for-gui
+    private void showStartupScreen() {
+        JWindow window = new JWindow();
+        JLabel content = new JLabel(new ImageIcon("data/splash.jpg"));
+        content.setText("Fantasy Stock Market");
+        content.setFont(new Font("Courier", Font.BOLD, 34));
+        content.setHorizontalTextPosition(JLabel.CENTER);
+        content.setVerticalTextPosition(JLabel.TOP);
+        window.getContentPane().add(content);
+        window.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        window.setLocationRelativeTo(this);
+        window.getContentPane().setBackground(Color.orange);
+        window.setVisible(true);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        window.setVisible(false);
+    }
+
     private void createMenu() {
         menuBar = new JMenuBar();
         menu = new JMenu("File");
@@ -118,18 +144,21 @@ public class FantasyStockMarketApp extends JFrame {
     private void createMarket() {
         marketPane = new MarketUI(market);
         marketPane.setOpaque(true);
+        marketPane.setBackground(MARKET_COLOR);
         super.add(marketPane, BorderLayout.PAGE_START);
     }
 
     private void createPortfolio() {
         portfolioPane = new PortfolioUI(myAccount);
         portfolioPane.setOpaque(true);
+        portfolioPane.setBackground(PORTFOLIO_COLOR);
         super.add(portfolioPane, BorderLayout.PAGE_END);
     }
 
     private void createDashboard() {
         dashboardPane = new DashboardUI(market, myAccount, marketPane, portfolioPane);
         dashboardPane.setOpaque(true);
+        dashboardPane.setBackground(MARKET_COLOR);
         super.add(dashboardPane, BorderLayout.CENTER);
     }
 
@@ -168,5 +197,4 @@ public class FantasyStockMarketApp extends JFrame {
             repaint();
         }
     }
-
 }

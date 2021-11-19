@@ -92,6 +92,4 @@ public class Account implements Writable {
     public List<Stock> getPortfolio() {
         return portfolio;
     }
-
-
 }

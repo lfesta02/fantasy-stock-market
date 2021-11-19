@@ -14,6 +14,8 @@ public class PortfolioUI extends JPanel {
     private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
     public PortfolioUI(Account a) {
+        JLabel title = new JLabel("Portfolio           ");
+        title.setFont(new Font("Tahoma", Font.BOLD, 20));
         String[] columnNames = {"Stock", "Symbol", "Current Price", "Yesterday's Price", "Change"};
 
         tableModel = new DefaultTableModel(columnNames, 0) {
@@ -24,8 +26,9 @@ public class PortfolioUI extends JPanel {
         };
         portfolioTable = new JTable(tableModel);
         updatePortfolioTable(a);
-        add(makePane(portfolioTable));
 
+        add(title);
+        add(makePane(portfolioTable));
     }
 
     private JScrollPane makePane(JTable table) {
