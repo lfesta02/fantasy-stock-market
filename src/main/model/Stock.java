@@ -93,6 +93,7 @@ public class Stock implements Writable {
         this.onMarket = onMarket;
     }
 
+    // EFFECTS: overrides equals to assess equality by stock name instead
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -105,6 +106,7 @@ public class Stock implements Writable {
         return name.equals(stock.name);
     }
 
+    // EFFECTS: produces hashcode for stock name
     @Override
     public int hashCode() {
         return Objects.hash(name);

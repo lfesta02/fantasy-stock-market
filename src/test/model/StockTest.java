@@ -51,4 +51,20 @@ public class StockTest {
         assertEquals("STCK", s.getSymbol());
     }
 
+    @Test
+    public void testEqualsHashCodeTrue() {
+        assertTrue(s.equals(s));
+        Stock s2 = new Stock("Stock1", "STCK", 10.00, 0.5, 1.5);
+        assertTrue(s.equals(s2));
+        assertEquals(s.hashCode(), s2.hashCode());
+    }
+
+    @Test
+    public void testEqualsHashCodeFalse() {
+        assertFalse(s.equals(null));
+        assertFalse(s.equals(0));
+        Stock s2 = new Stock("Stock2", "SX", 22.32, 0.1, 1.2);
+        assertFalse(s.equals(s2));
+        assertNotEquals(s.hashCode(), s2.hashCode());
+    }
 }
