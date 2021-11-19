@@ -54,7 +54,7 @@ public class FantasyStockMarketApp extends JFrame {
         super("Fantasy Stock Market");
         initializeFields();
         initializeGraphics();
-        initializeCloseBehaviour();
+        initializeBehaviourOnClose();
     }
 
     // MODIFIES: this
@@ -87,7 +87,7 @@ public class FantasyStockMarketApp extends JFrame {
         setVisible(true);
     }
 
-    private void initializeCloseBehaviour() {
+    private void initializeBehaviourOnClose() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -160,6 +160,12 @@ public class FantasyStockMarketApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             loadState();
+            remove(marketPane);
+            remove(dashboardPane);
+            remove(portfolioPane);
+            initializeGraphics();
+            revalidate();
+            repaint();
         }
     }
 

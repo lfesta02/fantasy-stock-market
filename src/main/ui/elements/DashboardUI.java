@@ -19,14 +19,13 @@ public class DashboardUI extends JPanel {
     private PortfolioUI portfolioUI;
     private NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
-
     public DashboardUI(StockMarket sm, Account acc, MarketUI marketUI, PortfolioUI portfolioUI) {
-        currentMarketTable = marketUI.getMarketTable();
-        currentPortfolioTable = portfolioUI.getPortfolioTable();
         this.sm = sm;
         this.acc = acc;
         this.marketUI = marketUI;
         this.portfolioUI = portfolioUI;
+        currentMarketTable = marketUI.getMarketTable();
+        currentPortfolioTable = portfolioUI.getPortfolioTable();
 
         JButton buyButton = new JButton("Buy Stock");
         buyButton.addActionListener(new BuyListener());
@@ -35,7 +34,7 @@ public class DashboardUI extends JPanel {
         JButton nextButton = new JButton("Next Day");
         nextButton.addActionListener(new NextDayListener());
 
-        balance = new JTextArea("Balance: " + acc.getBalance());
+        balance = new JTextArea("Balance: " + formatter.format(acc.getBalance()));
         balance.setEditable(false);
         balance.setFont(new Font("Tahoma", Font.PLAIN, 15));
         balance.setOpaque(false);

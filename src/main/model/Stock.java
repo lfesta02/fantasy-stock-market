@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 // Represents a stock having a name, symbol, and price, as well as bounds that restrict the
@@ -90,5 +91,18 @@ public class Stock implements Writable {
 
     public void setOnMarket(boolean onMarket) {
         this.onMarket = onMarket;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stock stock = (Stock) o;
+        return name.equals(stock.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

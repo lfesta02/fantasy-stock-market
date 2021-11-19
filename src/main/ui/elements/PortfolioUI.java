@@ -23,6 +23,7 @@ public class PortfolioUI extends JPanel {
             }
         };
         portfolioTable = new JTable(tableModel);
+        updatePortfolioTable(a);
         add(makePane(portfolioTable));
 
     }
