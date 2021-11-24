@@ -1,6 +1,8 @@
 package ui;
 
 import model.Account;
+import model.Event;
+import model.EventLog;
 import model.Stock;
 import model.StockMarket;
 import persistence.JsonReader;
@@ -47,7 +49,7 @@ public class FantasyStockMarketApp extends JFrame {
     private Stock stock3 = new Stock("Neptune Spacecraft",
             "NPT", 1099.23, 0.8, 1.2);
     private Stock stock4 = new Stock("Super Steroid Startup",
-            "SSS", 10.12, 0.9, 1.1);
+            "SSS", 10.12, 0.9, 1.35);
     private Stock stock5 = new Stock("Beyond Food Nutrition Pills",
             "BYND", 700.99, 0.9, 1.1);
 
@@ -104,6 +106,7 @@ public class FantasyStockMarketApp extends JFrame {
                 if (n == JOptionPane.YES_OPTION) {
                     saveState();
                 }
+                printLog(EventLog.getInstance());
             }
         });
     }
@@ -196,6 +199,12 @@ public class FantasyStockMarketApp extends JFrame {
             System.out.println("Loaded progress from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    private void printLog(EventLog el) {
+        for (Event e : el) {
+            System.out.println(e.toString());
         }
     }
 

@@ -28,6 +28,7 @@ public class Account implements Writable {
         if (!pfContains(s) && s.getPrice() <= balance && s.isOnMarket()) {
             setBalance(balance - s.getPrice());
             portfolio.add(s);
+            EventLog.getInstance().logEvent(new Event("Stock: " + s.getName() + " bought to portfolio"));
         }
     }
 
@@ -38,6 +39,7 @@ public class Account implements Writable {
         if (pfContains(s)) {
             setBalance(balance + s.getPrice());
             portfolio.remove(s);
+            EventLog.getInstance().logEvent(new Event("Stock: " + s.getName() + " sold from portfolio"));
         }
     }
 
@@ -45,6 +47,7 @@ public class Account implements Writable {
     // EFFECTS: adds stock to portfolio (for when loading from file)
     public void addStock(Stock s) {
         portfolio.add(s);
+        EventLog.getInstance().logEvent(new Event("Stock: " + s.getName() + " loaded from file to portfolio"));
     }
 
     // EFFECTS: returns true if Stock s is in the portfolio and false otherwise

@@ -24,3 +24,34 @@ it comes to investing, I find the stock market quite intriguing and thought it w
 - As a user, I want to be able to view information on a stock, namely its current price and change from last day
 - As a user, I want to be able to save the current state of my simulation to file when I quit
 - As a user, I want to be able to resume the simulation where I left off when I reopen it from file
+
+## Phase 4: Task 2
+
+Wed Nov 24 10:22:17 PST 2021\
+Stock: Fraser Foods Incorporated listed on stock market\
+Wed Nov 24 10:22:17 PST 2021\
+Stock: Burger Prince Restaurants listed on stock market\
+Wed Nov 24 10:22:17 PST 2021\
+Stock: Neptune Spacecraft listed on stock market\
+Wed Nov 24 10:22:17 PST 2021\
+Stock: Super Steroid Startup listed on stock market\
+Wed Nov 24 10:22:17 PST 2021\
+Stock: Beyond Food Nutrition Pills listed on stock market\
+Wed Nov 24 10:22:23 PST 2021\
+Stock: Beyond Food Nutrition Pills bought to portfolio\
+Wed Nov 24 10:22:27 PST 2021\
+Stock: Fraser Foods Incorporated bought to portfolio\
+Wed Nov 24 10:22:28 PST 2021\
+Stock: Fraser Foods Incorporated price updated\
+Wed Nov 24 10:22:28 PST 2021\
+Stock: Burger Prince Restaurants price updated\
+Wed Nov 24 10:22:28 PST 2021\
+Stock: Neptune Spacecraft price updated\
+Wed Nov 24 10:22:28 PST 2021\
+Stock: Super Steroid Startup price updated\
+Wed Nov 24 10:22:28 PST 2021\
+Stock: Beyond Food Nutrition Pills price updated\
+Wed Nov 24 10:22:32 PST 2021\
+Stock: Beyond Food Nutrition Pills sold from portfolio\
+Wed Nov 24 10:22:36 PST 2021\
+Stock: Burger Prince Restaurants bought to portfolio\

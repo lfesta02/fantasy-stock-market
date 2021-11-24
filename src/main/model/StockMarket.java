@@ -23,6 +23,7 @@ public class StockMarket implements Writable {
         if (!contains(s)) {
             stocks.add(s);
             s.setOnMarket(true);
+            EventLog.getInstance().logEvent(new Event("Stock: " + s.getName() + " listed on stock market"));
         }
     }
 
@@ -32,6 +33,7 @@ public class StockMarket implements Writable {
     public void removeStock(Stock s) {
         stocks.remove(s);
         s.setOnMarket(false);
+        EventLog.getInstance().logEvent(new Event("Stock: " + s.getName() + " de-listed from stock market"));
     }
 
     // MODIFIES: this
@@ -39,6 +41,7 @@ public class StockMarket implements Writable {
     public void nextDay() {
         for (Stock s : stocks) {
             s.update();
+            EventLog.getInstance().logEvent(new Event("Stock: " + s.getName() + " price updated"));
         }
     }
 
