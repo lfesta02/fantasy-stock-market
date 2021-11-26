@@ -54,4 +54,11 @@ Stock: Beyond Food Nutrition Pills price updated\
 Wed Nov 24 10:22:32 PST 2021\
 Stock: Beyond Food Nutrition Pills sold from portfolio\
 Wed Nov 24 10:22:36 PST 2021\
-Stock: Burger Prince Restaurants bought to portfolio\
+Stock: Burger Prince Restaurants bought to portfolio
+
+## Phase 4: Task 3
+
+- I would create some sort of interface or abstract class for the MarketUI and PortfolioUI classes, as 
+  they share similar behaviour and structure
+- I would try to find a way to get rid of the associations coming from the DashboardUI class - perhaps through
+  an Observer pattern
