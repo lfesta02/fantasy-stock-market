@@ -62,3 +62,5 @@ Stock: Burger Prince Restaurants bought to portfolio
   they share similar behaviour and structure
 - I would try to find a way to get rid of the associations coming from the DashboardUI class - perhaps through
   an Observer pattern
+
+test
